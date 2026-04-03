@@ -20,6 +20,6 @@
         }
 
         public override string ToString() =>
-            $"{Name},End:{IsEnd},Initial:{IsInitial}";
+            Name;
     }
 }
