@@ -28,12 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "MainForm";
+            SizePanel = new Panel();
+            AutomatonPanel = new Panel();
+            MatrixPanel = new Panel();
+            SuspendLayout();
+            // 
+            // SizePanel
+            // 
+            SizePanel.BackColor = Color.FromArgb(17, 17, 24);
+            SizePanel.Dock = DockStyle.Left;
+            SizePanel.Location = new Point(0, 0);
+            SizePanel.Name = "SizePanel";
+            SizePanel.Size = new Size(300, 794);
+            SizePanel.TabIndex = 0;
+            // 
+            // AutomatonPanel
+            // 
+            AutomatonPanel.BackColor = Color.IndianRed;
+            AutomatonPanel.Dock = DockStyle.Bottom;
+            AutomatonPanel.Location = new Point(300, 392);
+            AutomatonPanel.Name = "AutomatonPanel";
+            AutomatonPanel.Size = new Size(1029, 402);
+            AutomatonPanel.TabIndex = 1;
+            // 
+            // MatrixPanel
+            // 
+            MatrixPanel.BackColor = Color.White;
+            MatrixPanel.Dock = DockStyle.Top;
+            MatrixPanel.Location = new Point(300, 0);
+            MatrixPanel.Name = "MatrixPanel";
+            MatrixPanel.Size = new Size(1029, 386);
+            MatrixPanel.TabIndex = 2;
+            // 
+            // MainForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Black;
+            ClientSize = new Size(1329, 794);
+            Controls.Add(MatrixPanel);
+            Controls.Add(AutomatonPanel);
+            Controls.Add(SizePanel);
+            Name = "MainForm";
+            Text = "MainForm";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel SizePanel;
+        private Panel AutomatonPanel;
+        private Panel MatrixPanel;
     }
 }
