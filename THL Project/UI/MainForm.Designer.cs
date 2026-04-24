@@ -29,6 +29,17 @@
         private void InitializeComponent()
         {
             SidePanel = new Panel();
+            ResetButton = new Button();
+            TurnIntoDFAButton = new ReaLTaiizor.Controls.CrownButton();
+            WordInputInformationLabel = new Label();
+            label4 = new Label();
+            InitialStateColorKey = new Label();
+            TransitionErrorLabel = new Label();
+            IsFinalCheckBox = new CheckBox();
+            IsInitialCheckBox = new CheckBox();
+            StateInputErrorLabel = new Label();
+            WordInputTextBox = new TextBox();
+            AlphabetErrorLabel = new Label();
             GenerateAutomatonButton = new Button();
             AddTransitionButton = new ReaLTaiizor.Controls.CrownButton();
             ToComboBox = new ReaLTaiizor.Controls.CrownComboBox();
@@ -42,7 +53,6 @@
             AutomatonPanel = new Panel();
             MatrixPanel = new Panel();
             MatrixDataGridView = new DataGridView();
-            label4 = new Label();
             SidePanel.SuspendLayout();
             MatrixPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MatrixDataGridView).BeginInit();
@@ -51,7 +61,17 @@
             // SidePanel
             // 
             SidePanel.BackColor = Color.FromArgb(17, 17, 24);
+            SidePanel.Controls.Add(ResetButton);
+            SidePanel.Controls.Add(TurnIntoDFAButton);
+            SidePanel.Controls.Add(WordInputInformationLabel);
             SidePanel.Controls.Add(label4);
+            SidePanel.Controls.Add(InitialStateColorKey);
+            SidePanel.Controls.Add(TransitionErrorLabel);
+            SidePanel.Controls.Add(IsFinalCheckBox);
+            SidePanel.Controls.Add(IsInitialCheckBox);
+            SidePanel.Controls.Add(StateInputErrorLabel);
+            SidePanel.Controls.Add(WordInputTextBox);
+            SidePanel.Controls.Add(AlphabetErrorLabel);
             SidePanel.Controls.Add(GenerateAutomatonButton);
             SidePanel.Controls.Add(AddTransitionButton);
             SidePanel.Controls.Add(ToComboBox);
@@ -68,32 +88,142 @@
             SidePanel.Size = new Size(300, 794);
             SidePanel.TabIndex = 0;
             // 
+            // ResetButton
+            // 
+            ResetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ResetButton.Location = new Point(28, 759);
+            ResetButton.Name = "ResetButton";
+            ResetButton.Size = new Size(75, 23);
+            ResetButton.TabIndex = 25;
+            ResetButton.Text = "Reset";
+            ResetButton.UseVisualStyleBackColor = true;
+            ResetButton.Click += ResetButton_Click;
+            // 
+            // TurnIntoDFAButton
+            // 
+            TurnIntoDFAButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            TurnIntoDFAButton.Location = new Point(28, 700);
+            TurnIntoDFAButton.Name = "TurnIntoDFAButton";
+            TurnIntoDFAButton.Padding = new Padding(5);
+            TurnIntoDFAButton.Size = new Size(250, 40);
+            TurnIntoDFAButton.TabIndex = 24;
+            TurnIntoDFAButton.Text = "Turn Into DFA";
+            TurnIntoDFAButton.Click += TurnIntoDFAButton_Click;
+            // 
+            // WordInputInformationLabel
+            // 
+            WordInputInformationLabel.AutoSize = true;
+            WordInputInformationLabel.ForeColor = Color.Red;
+            WordInputInformationLabel.Location = new Point(28, 392);
+            WordInputInformationLabel.Name = "WordInputInformationLabel";
+            WordInputInformationLabel.Size = new Size(0, 15);
+            WordInputInformationLabel.TabIndex = 23;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.ForeColor = SystemColors.ControlLightLight;
+            label4.Location = new Point(28, 345);
+            label4.Name = "label4";
+            label4.Size = new Size(74, 15);
+            label4.TabIndex = 22;
+            label4.Text = "Input a word";
+            // 
+            // InitialStateColorKey
+            // 
+            InitialStateColorKey.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            InitialStateColorKey.AutoSize = true;
+            InitialStateColorKey.ForeColor = Color.White;
+            InitialStateColorKey.Location = new Point(28, 600);
+            InitialStateColorKey.Name = "InitialStateColorKey";
+            InitialStateColorKey.Size = new Size(0, 15);
+            InitialStateColorKey.TabIndex = 21;
+            // 
+            // TransitionErrorLabel
+            // 
+            TransitionErrorLabel.AutoSize = true;
+            TransitionErrorLabel.ForeColor = Color.Red;
+            TransitionErrorLabel.Location = new Point(28, 315);
+            TransitionErrorLabel.Name = "TransitionErrorLabel";
+            TransitionErrorLabel.Size = new Size(0, 15);
+            TransitionErrorLabel.TabIndex = 20;
+            // 
+            // IsFinalCheckBox
+            // 
+            IsFinalCheckBox.AutoSize = true;
+            IsFinalCheckBox.ForeColor = Color.White;
+            IsFinalCheckBox.Location = new Point(150, 163);
+            IsFinalCheckBox.Name = "IsFinalCheckBox";
+            IsFinalCheckBox.Size = new Size(62, 19);
+            IsFinalCheckBox.TabIndex = 19;
+            IsFinalCheckBox.Text = "Is Final";
+            IsFinalCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // IsInitialCheckBox
+            // 
+            IsInitialCheckBox.AutoSize = true;
+            IsInitialCheckBox.ForeColor = Color.White;
+            IsInitialCheckBox.Location = new Point(28, 163);
+            IsInitialCheckBox.Name = "IsInitialCheckBox";
+            IsInitialCheckBox.Size = new Size(66, 19);
+            IsInitialCheckBox.TabIndex = 18;
+            IsInitialCheckBox.Text = "Is Initial";
+            IsInitialCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // StateInputErrorLabel
+            // 
+            StateInputErrorLabel.AutoSize = true;
+            StateInputErrorLabel.ForeColor = Color.Red;
+            StateInputErrorLabel.Location = new Point(28, 140);
+            StateInputErrorLabel.Name = "StateInputErrorLabel";
+            StateInputErrorLabel.Size = new Size(0, 15);
+            StateInputErrorLabel.TabIndex = 17;
+            // 
+            // WordInputTextBox
+            // 
+            WordInputTextBox.Location = new Point(28, 363);
+            WordInputTextBox.Name = "WordInputTextBox";
+            WordInputTextBox.Size = new Size(250, 23);
+            WordInputTextBox.TabIndex = 16;
+            WordInputTextBox.TextChanged += WordInputTextBox_TextChanged;
+            // 
+            // AlphabetErrorLabel
+            // 
+            AlphabetErrorLabel.AutoSize = true;
+            AlphabetErrorLabel.ForeColor = Color.Red;
+            AlphabetErrorLabel.Location = new Point(28, 64);
+            AlphabetErrorLabel.Name = "AlphabetErrorLabel";
+            AlphabetErrorLabel.Size = new Size(0, 15);
+            AlphabetErrorLabel.TabIndex = 15;
+            // 
             // GenerateAutomatonButton
             // 
-            GenerateAutomatonButton.Anchor = AnchorStyles.Bottom;
+            GenerateAutomatonButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             GenerateAutomatonButton.BackColor = Color.FromArgb(29, 199, 125);
             GenerateAutomatonButton.ForeColor = Color.Black;
-            GenerateAutomatonButton.Location = new Point(28, 720);
+            GenerateAutomatonButton.Location = new Point(28, 642);
             GenerateAutomatonButton.Name = "GenerateAutomatonButton";
             GenerateAutomatonButton.Size = new Size(250, 40);
             GenerateAutomatonButton.TabIndex = 14;
             GenerateAutomatonButton.Text = "-> Generate Automaton";
             GenerateAutomatonButton.UseVisualStyleBackColor = false;
+            GenerateAutomatonButton.Click += GenerateAutomatonButton_Click;
             // 
             // AddTransitionButton
             // 
-            AddTransitionButton.Location = new Point(28, 238);
+            AddTransitionButton.Location = new Point(28, 263);
             AddTransitionButton.Name = "AddTransitionButton";
             AddTransitionButton.Padding = new Padding(5);
             AddTransitionButton.Size = new Size(250, 40);
             AddTransitionButton.TabIndex = 13;
             AddTransitionButton.Text = "+ Add Transition";
+            AddTransitionButton.Click += AddTransitionButton_Click;
             // 
             // ToComboBox
             // 
             ToComboBox.DrawMode = DrawMode.OwnerDrawVariable;
             ToComboBox.FormattingEnabled = true;
-            ToComboBox.Location = new Point(206, 194);
+            ToComboBox.Location = new Point(206, 219);
             ToComboBox.Name = "ToComboBox";
             ToComboBox.Size = new Size(72, 24);
             ToComboBox.TabIndex = 12;
@@ -102,7 +232,7 @@
             // 
             SymbolComboBox.DrawMode = DrawMode.OwnerDrawVariable;
             SymbolComboBox.FormattingEnabled = true;
-            SymbolComboBox.Location = new Point(117, 194);
+            SymbolComboBox.Location = new Point(117, 219);
             SymbolComboBox.Name = "SymbolComboBox";
             SymbolComboBox.Size = new Size(67, 24);
             SymbolComboBox.TabIndex = 11;
@@ -111,7 +241,7 @@
             // 
             FromComboBox.DrawMode = DrawMode.OwnerDrawVariable;
             FromComboBox.FormattingEnabled = true;
-            FromComboBox.Location = new Point(28, 194);
+            FromComboBox.Location = new Point(28, 219);
             FromComboBox.Name = "FromComboBox";
             FromComboBox.Size = new Size(73, 24);
             FromComboBox.TabIndex = 10;
@@ -120,7 +250,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = SystemColors.ButtonFace;
-            label3.Location = new Point(28, 176);
+            label3.Location = new Point(28, 201);
             label3.Name = "label3";
             label3.Size = new Size(64, 15);
             label3.TabIndex = 4;
@@ -132,6 +262,7 @@
             StatesTextBox.Name = "StatesTextBox";
             StatesTextBox.Size = new Size(250, 23);
             StatesTextBox.TabIndex = 3;
+            StatesTextBox.KeyPress += StatesTextBox_KeyPress;
             // 
             // label2
             // 
@@ -190,15 +321,6 @@
             MatrixDataGridView.Size = new Size(1029, 386);
             MatrixDataGridView.TabIndex = 0;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(28, 64);
-            label4.Name = "label4";
-            label4.Size = new Size(38, 15);
-            label4.TabIndex = 15;
-            label4.Text = "label4";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -233,6 +355,16 @@
         private ReaLTaiizor.Controls.CrownButton AddTransitionButton;
         private Button GenerateAutomatonButton;
         private DataGridView MatrixDataGridView;
+        private Label AlphabetErrorLabel;
+        private TextBox WordInputTextBox;
+        private Label StateInputErrorLabel;
+        private CheckBox IsFinalCheckBox;
+        private CheckBox IsInitialCheckBox;
+        private Label TransitionErrorLabel;
+        private Label InitialStateColorKey;
+        private Label WordInputInformationLabel;
         private Label label4;
+        private ReaLTaiizor.Controls.CrownButton TurnIntoDFAButton;
+        private Button ResetButton;
     }
 }

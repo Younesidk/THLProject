@@ -125,4 +125,7 @@ public class Automaton
 
     public List<string> GetSymbolNames() =>
         SymbolIndexMap.OrderBy(s => s.Value).Select(s => s.Key).ToList();
+
+    public bool InitExist() =>
+        states.Any(s => s.IsInitial);
 }

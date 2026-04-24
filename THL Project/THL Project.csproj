@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Msagl" Version="1.1.6" />
+    <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.6" />
+    <PackageReference Include="Microsoft.Msagl.GraphViewerGDI" Version="1.1.7" />
     <PackageReference Include="ReaLTaiizor" Version="3.8.1.8" />
   </ItemGroup>
 
