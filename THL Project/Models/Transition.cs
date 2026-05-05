@@ -18,6 +18,4 @@ public class Transition
         Symbol = symbol;
         From = from;
     }
-
-
 }

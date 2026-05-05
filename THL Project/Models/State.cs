@@ -7,19 +7,18 @@
         public bool IsInitial { get; private set; }
         public bool IsEnd { get; private set; }
 
-        public State(string Name,bool isInitial,bool isEnd)
+        public State(string name, bool isInitial, bool isEnd)
         {
-            this.Name = Name;
+            Name = name;
             IsInitial = isInitial;
             IsEnd = isEnd;
         }
 
-        public State(string Name)
+        public State(string name)
         {
-            this.Name = Name;
+            Name = name;
         }
 
-        public override string ToString() =>
-            Name;
+        public override string ToString() => Name;
     }
 }

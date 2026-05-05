@@ -1,282 +1,283 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Automaton Programming Course</title>
-  <style>
-    :root {
-      --bg: #0f0f0f;
-      --surface: #1a1a1a;
-      --surface-alt: #202020;
-      --border: #2d2d2d;
-      --text: #f2f2f2;
-      --muted: #b1b1b1;
-      --accent: #00d4aa;
-      --accent-soft: #0a3a32;
-      --code-bg: #111217;
-      --code-border: #2a2f3a;
-      --radius: 10px;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automaton Programming Course</title>
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --surface: #1a1a1a;
+            --surface-alt: #202020;
+            --border: #2d2d2d;
+            --text: #f2f2f2;
+            --muted: #b1b1b1;
+            --accent: #00d4aa;
+            --accent-soft: #0a3a32;
+            --code-bg: #111217;
+            --code-border: #2a2f3a;
+            --radius: 10px;
+        }
 
-    * {
-      box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    html {
-      scroll-behavior: smooth;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Bahnschrift", "Candara", "Tahoma", sans-serif;
-      line-height: 1.6;
-    }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Bahnschrift", "Candara", "Tahoma", sans-serif;
+            line-height: 1.6;
+        }
 
-    .layout {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-      min-height: 100vh;
-    }
+        .layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            min-height: 100vh;
+        }
 
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100dvh;
-      border-right: 1px solid var(--border);
-      background: #141414;
-      padding: 22px 16px;
-      overflow: auto;
-    }
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100dvh;
+            border-right: 1px solid var(--border);
+            background: #141414;
+            padding: 22px 16px;
+            overflow: auto;
+        }
 
-    .sidebar h1 {
-      margin: 0 0 12px;
-      font-size: 1.15rem;
-      line-height: 1.3;
-      letter-spacing: 0.2px;
-    }
+            .sidebar h1 {
+                margin: 0 0 12px;
+                font-size: 1.15rem;
+                line-height: 1.3;
+                letter-spacing: 0.2px;
+            }
 
-    .scope {
-      margin: 0 0 20px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
+        .scope {
+            margin: 0 0 20px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
 
-    .sidebar nav {
-      display: grid;
-      gap: 6px;
-    }
+        .sidebar nav {
+            display: grid;
+            gap: 6px;
+        }
 
-    .sidebar a {
-      color: #d8d8d8;
-      text-decoration: none;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 0.92rem;
-      display: block;
-    }
+        .sidebar a {
+            color: #d8d8d8;
+            text-decoration: none;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.92rem;
+            display: block;
+        }
 
-    .sidebar a:hover {
-      border-color: var(--border);
-      background: #1c1c1c;
-    }
+            .sidebar a:hover {
+                border-color: var(--border);
+                background: #1c1c1c;
+            }
 
-    .sidebar a.active {
-      border-color: #2f6b5f;
-      background: var(--accent-soft);
-      color: #d8fff5;
-    }
+            .sidebar a.active {
+                border-color: #2f6b5f;
+                background: var(--accent-soft);
+                color: #d8fff5;
+            }
 
-    .content {
-      padding: 24px 30px 36px;
-      display: grid;
-      gap: 20px;
-    }
+        .content {
+            padding: 24px 30px 36px;
+            display: grid;
+            gap: 20px;
+        }
 
-    section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      scroll-margin-top: 20px;
-    }
+        section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            scroll-margin-top: 20px;
+        }
 
-    section:nth-of-type(even) {
-      background: var(--surface-alt);
-    }
+            section:nth-of-type(even) {
+                background: var(--surface-alt);
+            }
 
-    h2 {
-      margin: 0 0 10px;
-      font-size: 1.38rem;
-      line-height: 1.3;
-    }
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.38rem;
+            line-height: 1.3;
+        }
 
-    h3 {
-      margin: 18px 0 8px;
-      font-size: 1.02rem;
-      letter-spacing: 0.15px;
-      color: #dcfef6;
-    }
+        h3 {
+            margin: 18px 0 8px;
+            font-size: 1.02rem;
+            letter-spacing: 0.15px;
+            color: #dcfef6;
+        }
 
-    p {
-      margin: 0 0 12px;
-    }
+        p {
+            margin: 0 0 12px;
+        }
 
-    ul,
-    ol {
-      margin: 0 0 12px;
-      padding-left: 20px;
-    }
+        ul,
+        ol {
+            margin: 0 0 12px;
+            padding-left: 20px;
+        }
 
-    li {
-      margin-bottom: 7px;
-    }
+        li {
+            margin-bottom: 7px;
+        }
 
-    .ref {
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-size: 0.9rem;
-    }
+        .ref {
+            color: var(--muted);
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
 
-    .pill {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 4px 8px;
-      border-radius: 8px;
-      border: 1px solid #315e55;
-      background: #132722;
-      color: #c8fff2;
-      font-size: 0.78rem;
-      letter-spacing: 0.2px;
-    }
+        .pill {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid #315e55;
+            background: #132722;
+            color: #c8fff2;
+            font-size: 0.78rem;
+            letter-spacing: 0.2px;
+        }
 
-    pre {
-      margin: 12px 0 0;
-      background: var(--code-bg);
-      border: 1px solid var(--code-border);
-      border-radius: 8px;
-      padding: 14px;
-      overflow-x: auto;
-    }
+        pre {
+            margin: 12px 0 0;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 8px;
+            padding: 14px;
+            overflow-x: auto;
+        }
 
-    code {
-      font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
-      font-size: 0.87rem;
-      color: #e8ebff;
-      white-space: pre;
-    }
+        code {
+            font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
+            font-size: 0.87rem;
+            color: #e8ebff;
+            white-space: pre;
+        }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 10px;
-    }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
 
-    .summary-grid > div {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      background: #171717;
-    }
+            .summary-grid > div {
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 10px;
+                background: #171717;
+            }
 
-    .summary-grid h4 {
-      margin: 0 0 6px;
-      font-size: 0.92rem;
-      color: #d8fff5;
-    }
+            .summary-grid h4 {
+                margin: 0 0 6px;
+                font-size: 0.92rem;
+                color: #d8fff5;
+            }
 
-    .summary-grid p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #dadada;
-    }
+            .summary-grid p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #dadada;
+            }
 
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
 
-      .sidebar {
-        position: sticky;
-        top: 0;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        z-index: 5;
-      }
+            .sidebar {
+                position: sticky;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                z-index: 5;
+            }
 
-      .sidebar nav {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+                .sidebar nav {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
 
-      .content {
-        padding: 18px;
-      }
+            .content {
+                padding: 18px;
+            }
 
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <h1>Automaton Course From Project Code</h1>
-      <p class="scope">Audience: CS student with OOP basics, new to automaton theory.</p>
-      <p class="scope">Source scope: only Models and Logic folders.</p>
-      <nav>
-        <a href="#lesson-1">1. State</a>
-        <a href="#lesson-2">2. Transition</a>
-        <a href="#lesson-3">3. Automaton</a>
-        <a href="#lesson-4">4. RecognitionResult</a>
-        <a href="#lesson-5">5. AutomatonDeterminizer</a>
-        <a href="#lesson-6">6. AutomatonRecognizer</a>
-        <a href="#lesson-7">7. Capstone Flow</a>
-      </nav>
-    </aside>
+    <div class="layout">
+        <aside class="sidebar">
+            <h1>Automaton Course From Project Code</h1>
+            <p class="scope">Audience: CS student with OOP basics, new to automaton theory.</p>
+            <p class="scope">Source scope: only Models and Logic folders.</p>
+            <nav>
+                <a href="#lesson-1">1. State</a>
+                <a href="#lesson-2">2. Transition</a>
+                <a href="#lesson-3">3. Automaton</a>
+                <a href="#lesson-4">4. RecognitionResult</a>
+                <a href="#lesson-5">5. AutomatonDeterminizer</a>
+                <a href="#lesson-6">6. AutomatonRecognizer</a>
+                <a href="#lesson-7">7. Capstone Flow</a>
+                <a href="#lesson-8">8. AutomatonController</a>
+            </nav>
+        </aside>
 
-    <main class="content">
-      <section id="lesson-1">
-        <h2>Lesson 1: State Class (Models/State.cs)</h2>
-        <p class="ref">Code reference: Models/State.cs lines 3-23</p>
-        <span class="pill">Data Structure First</span>
+        <main class="content">
+            <section id="lesson-1">
+                <h2>Lesson 1: State Class (Models/State.cs)</h2>
+                <p class="ref">Code reference: Models/State.cs lines 3-23</p>
+                <span class="pill">Data Structure First</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          A finite-state automaton needs a canonical object for one node in the state graph. This class stores
-          the state identity and whether it is the entry state or an accepting state.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    A finite-state automaton needs a canonical object for one node in the state graph. This class stores
+                    the state identity and whether it is the entry state or an accepting state.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          Every transition points from one State to another, and the full automaton stores a collection of State
-          objects. Recognition and determinization both depend on these flags when deciding start and acceptance behavior.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    Every transition points from one State to another, and the full automaton stores a collection of State
+                    objects. Recognition and determinization both depend on these flags when deciding start and acceptance behavior.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>Name: stable identifier used in maps and logs.</li>
-          <li>IsInitial: marks the automaton start state q0.</li>
-          <li>IsEnd: marks membership in accepting set F.</li>
-          <li>Constructor with flags: creates a fully defined state in one call.</li>
-          <li>Constructor with name only: supports incremental construction.</li>
-          <li>ToString override: improves readability in debugging and UI rendering.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>Name: stable identifier used in maps and logs.</li>
+                    <li>IsInitial: marks the automaton start state q0.</li>
+                    <li>IsEnd: marks membership in accepting set F.</li>
+                    <li>Constructor with flags: creates a fully defined state in one call.</li>
+                    <li>Constructor with name only: supports incremental construction.</li>
+                    <li>ToString override: improves readability in debugging and UI rendering.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          In formal notation, this class represents an element of Q (the state set). IsInitial and IsEnd encode
-          special subsets: one initial state and one or more final states.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    In formal notation, this class represents an element of Q (the state set). IsInitial and IsEnd encode
+                    special subsets: one initial state and one or more final states.
+                </p>
 
-        <pre><code>public class State
+                <pre><code>public class State
 {
     public string Name { get; private set; }
     public bool IsInitial { get; private set; }
@@ -289,40 +290,40 @@
         IsEnd = isEnd;
     }
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-2">
-        <h2>Lesson 2: Transition Class (Models/Transition.cs)</h2>
-        <p class="ref">Code reference: Models/Transition.cs lines 3-20</p>
-        <span class="pill">Graph Edge Model</span>
+            <section id="lesson-2">
+                <h2>Lesson 2: Transition Class (Models/Transition.cs)</h2>
+                <p class="ref">Code reference: Models/Transition.cs lines 3-20</p>
+                <span class="pill">Graph Edge Model</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          It models one labeled edge in the automaton graph: from state, read symbol, move to state.
-          Without this class, transitions would be loose tuples and harder to validate or manipulate.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    It models one labeled edge in the automaton graph: from state, read symbol, move to state.
+                    Without this class, transitions would be loose tuples and harder to validate or manipulate.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          Automaton.AddTransition consumes Transition objects and stores them in the transition matrix.
-          Both recognition and determinization depend on this normalized representation.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    Automaton.AddTransition consumes Transition objects and stores them in the transition matrix.
+                    Both recognition and determinization depend on this normalized representation.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>From and To: capture source and destination states.</li>
-          <li>Symbol: transition label from alphabet Sigma.</li>
-          <li>Full constructor: convenient for complete edge insertion.</li>
-          <li>Partial constructor: allows workflows where destination is decided later.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>From and To: capture source and destination states.</li>
+                    <li>Symbol: transition label from alphabet Sigma.</li>
+                    <li>Full constructor: convenient for complete edge insertion.</li>
+                    <li>Partial constructor: allows workflows where destination is decided later.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This is a concrete representation of transition function delta. In NFA terms, multiple transitions with
-          the same source and symbol are allowed, which is later represented by a list in each matrix cell.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This is a concrete representation of transition function delta. In NFA terms, multiple transitions with
+                    the same source and symbol are allowed, which is later represented by a list in each matrix cell.
+                </p>
 
-        <pre><code>public class Transition
+                <pre><code>public class Transition
 {
     public State? From { get; set; }
     public State? To { get; set; }
@@ -335,43 +336,43 @@
         To = to;
     }
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-3">
-        <h2>Lesson 3: Automaton Class (Models/Automaton.cs)</h2>
-        <p class="ref">Code reference: Models/Automaton.cs lines 5-127</p>
-        <span class="pill">Core Machine Representation</span>
+            <section id="lesson-3">
+                <h2>Lesson 3: Automaton Class (Models/Automaton.cs)</h2>
+                <p class="ref">Code reference: Models/Automaton.cs lines 5-127</p>
+                <span class="pill">Core Machine Representation</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          It stores the full automaton in memory: states, alphabet, and transitions. It also gives fast lookup
-          for transition queries used by algorithms.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    It stores the full automaton in memory: states, alphabet, and transitions. It also gives fast lookup
+                    for transition queries used by algorithms.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          This is the shared data model for both algorithms in Logic. Recognizer reads from it. Determinizer reads an NFA
-          Automaton and writes a DFA Automaton.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    This is the shared data model for both algorithms in Logic. Recognizer reads from it. Determinizer reads an NFA
+                    Automaton and writes a DFA Automaton.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>transitionMatrix: 2D table indexed by state and symbol; each cell stores a list of reachable states.</li>
-          <li>StateIndexMap and SymbolIndexMap: convert names/symbols into matrix indices.</li>
-          <li>RebuiltMatrix: resizes matrix when states or symbols are added while preserving existing transitions.</li>
-          <li>AddState and AddSymbol: grow Q and Sigma safely.</li>
-          <li>AddTransition and GetTransition: write and read delta transitions.</li>
-          <li>IsDeterministic: verifies whether every cell has at most one destination state.</li>
-          <li>GetInitialState and GetFinalStates: expose q0 and F for algorithmic checks.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>transitionMatrix: 2D table indexed by state and symbol; each cell stores a list of reachable states.</li>
+                    <li>StateIndexMap and SymbolIndexMap: convert names/symbols into matrix indices.</li>
+                    <li>RebuiltMatrix: resizes matrix when states or symbols are added while preserving existing transitions.</li>
+                    <li>AddState and AddSymbol: grow Q and Sigma safely.</li>
+                    <li>AddTransition and GetTransition: write and read delta transitions.</li>
+                    <li>IsDeterministic: verifies whether every cell has at most one destination state.</li>
+                    <li>GetInitialState and GetFinalStates: expose q0 and F for algorithmic checks.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This class implements the formal automaton tuple (Q, Sigma, delta, q0, F). Because each matrix cell is
-          a list, the same structure can represent both DFA and NFA behavior.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This class implements the formal automaton tuple (Q, Sigma, delta, q0, F). Because each matrix cell is
+                    a list, the same structure can represent both DFA and NFA behavior.
+                </p>
 
-        <pre><code>public void AddTransition(Transition transition)
+                <pre><code>public void AddTransition(Transition transition)
 {
     if (!StateIndexMap.TryGetValue(transition.From.Name, out var rowNumber))
         return;
@@ -394,78 +395,78 @@ public bool IsDeterministic()
 
     return true;
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-4">
-        <h2>Lesson 4: RecognitionResult Class (Models/RecognitionResult.cs)</h2>
-        <p class="ref">Code reference: Models/RecognitionResult.cs lines 3-7</p>
-        <span class="pill">Algorithm Output Envelope</span>
+            <section id="lesson-4">
+                <h2>Lesson 4: RecognitionResult Class (Models/RecognitionResult.cs)</h2>
+                <p class="ref">Code reference: Models/RecognitionResult.cs lines 3-7</p>
+                <span class="pill">Algorithm Output Envelope</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          A recognizer should return more than accepted versus rejected. This class bundles decision, reason,
-          and execution trace so callers can inspect how and why the word was processed.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    A recognizer should return more than accepted versus rejected. This class bundles decision, reason,
+                    and execution trace so callers can inspect how and why the word was processed.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          AutomatonRecognizer returns this object for every input word. It decouples algorithm internals from how
-          another layer displays success or failure.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    AutomatonRecognizer returns this object for every input word. It decouples algorithm internals from how
+                    another layer displays success or failure.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>Accepted: final language membership result.</li>
-          <li>RejectionReason: machine-readable and human-readable failure context.</li>
-          <li>StepLog: state-by-state trace for debugging and teaching.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>Accepted: final language membership result.</li>
+                    <li>RejectionReason: machine-readable and human-readable failure context.</li>
+                    <li>StepLog: state-by-state trace for debugging and teaching.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This object makes recognizer output explainable. In automata tooling, trace data is critical for proving
-          correctness and diagnosing malformed transition tables.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This object makes recognizer output explainable. In automata tooling, trace data is critical for proving
+                    correctness and diagnosing malformed transition tables.
+                </p>
 
-        <pre><code>public class RecognitionResult
+                <pre><code>public class RecognitionResult
 {
     public bool Accepted { get; set; }
     public string? RejectionReason { get; set; }
     public List&lt;string&gt; StepLog { get; set; } = new();
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-5">
-        <h2>Lesson 5: AutomatonDeterminizer Class (Logic/AutomatonDeterminizer.cs)</h2>
-        <p class="ref">Code reference: Logic/AutomatonDeterminizer.cs lines 5-106</p>
-        <span class="pill">NFA to DFA Algorithm</span>
+            <section id="lesson-5">
+                <h2>Lesson 5: AutomatonDeterminizer Class (Logic/AutomatonDeterminizer.cs)</h2>
+                <p class="ref">Code reference: Logic/AutomatonDeterminizer.cs lines 5-106</p>
+                <span class="pill">NFA to DFA Algorithm</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          It converts an NFA model to an equivalent DFA model so recognition can follow one deterministic transition
-          per symbol instead of branching over multiple active states.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    It converts an NFA model to an equivalent DFA model so recognition can follow one deterministic transition
+                    per symbol instead of branching over multiple active states.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          It is a preprocessing algorithm. If input automaton is already deterministic, it returns the same object.
-          Otherwise, it builds a new DFA using subset construction and returns it to downstream logic.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    It is a preprocessing algorithm. If input automaton is already deterministic, it returns the same object.
+                    Otherwise, it builds a new DFA using subset construction and returns it to downstream logic.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>NFAtoDFA: main conversion routine with guard checks and full subset traversal.</li>
-          <li>stateMap dictionary: tracks already-created DFA states by canonical subset key.</li>
-          <li>queue: breadth-first processing of unexpanded NFA subsets.</li>
-          <li>GetKey: sorts state names so logically equal subsets map to the same key.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>NFAtoDFA: main conversion routine with guard checks and full subset traversal.</li>
+                    <li>stateMap dictionary: tracks already-created DFA states by canonical subset key.</li>
+                    <li>queue: breadth-first processing of unexpanded NFA subsets.</li>
+                    <li>GetKey: sorts state names so logically equal subsets map to the same key.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This is classical subset construction. Each DFA state is a set of NFA states. Acceptance propagates with
-          existential rule: DFA state is final if any member NFA state is final.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This is classical subset construction. Each DFA state is a set of NFA states. Acceptance propagates with
+                    existential rule: DFA state is final if any member NFA state is final.
+                </p>
 
-        <pre><code>while (queue.Count &gt; 0)
+                <pre><code>while (queue.Count &gt; 0)
 {
     var currentSet = queue.Dequeue();
 
@@ -490,41 +491,41 @@ public bool IsDeterministic()
         // Create missing DFA state and add transition...
     }
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-6">
-        <h2>Lesson 6: AutomatonRecognizer Class (Logic/AutomatonRecognizer.cs)</h2>
-        <p class="ref">Code reference: Logic/AutomatonRecognizer.cs lines 5-87</p>
-        <span class="pill">Word Recognition Engine</span>
+            <section id="lesson-6">
+                <h2>Lesson 6: AutomatonRecognizer Class (Logic/AutomatonRecognizer.cs)</h2>
+                <p class="ref">Code reference: Logic/AutomatonRecognizer.cs lines 5-87</p>
+                <span class="pill">Word Recognition Engine</span>
 
-        <h3>What problem this class solves</h3>
-        <p>
-          It executes the automaton on an input string and decides whether the string belongs to the language.
-          It also captures a trace and structured rejection reasons.
-        </p>
+                <h3>What problem this class solves</h3>
+                <p>
+                    It executes the automaton on an input string and decides whether the string belongs to the language.
+                    It also captures a trace and structured rejection reasons.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          This is the endpoint algorithm after model construction and optional determinization.
-          It turns static structure into runtime behavior.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    This is the endpoint algorithm after model construction and optional determinization.
+                    It turns static structure into runtime behavior.
+                </p>
 
-        <h3>Key properties and methods and why they exist</h3>
-        <ul>
-          <li>Constructor injects one Automaton instance into recognizer logic.</li>
-          <li>RecognizeWord performs symbol-by-symbol simulation and logs each transition.</li>
-          <li>Early guard clauses reject null words, missing initial state, invalid symbols, and blocked transitions.</li>
-          <li>BuildRejectedResult centralizes error packaging for consistent outputs.</li>
-        </ul>
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>Constructor injects one Automaton instance into recognizer logic.</li>
+                    <li>RecognizeWord performs symbol-by-symbol simulation and logs each transition.</li>
+                    <li>Early guard clauses reject null words, missing initial state, invalid symbols, and blocked transitions.</li>
+                    <li>BuildRejectedResult centralizes error packaging for consistent outputs.</li>
+                </ul>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This is DFA-style simulation with linear scan over input length. Complexity is O(n) transition lookups.
-          Current implementation picks first next state from a transition cell, so full NFA branching is not explored here.
-          Determinization before recognition gives correct general behavior.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This is DFA-style simulation with linear scan over input length. Complexity is O(n) transition lookups.
+                    Current implementation picks first next state from a transition cell, so full NFA branching is not explored here.
+                    Determinization before recognition gives correct general behavior.
+                </p>
 
-        <pre><code>for (int i = 0; i &lt; word.Length; i++)
+                <pre><code>for (int i = 0; i &lt; word.Length; i++)
 {
     char symbol = word[i];
     if (!automaton.IsValidSymbol(symbol))
@@ -538,61 +539,61 @@ public bool IsDeterministic()
     stepLog.Add($"{currentState.Name} --{symbol}--&gt; {nextState.Name}");
     currentState = nextState;
 }</code></pre>
-      </section>
+            </section>
 
-      <section id="lesson-7">
-        <h2>Lesson 7: Capstone - Full Execution Flow</h2>
-        <p class="ref">Code references: Models/*.cs and Logic/*.cs only</p>
-        <span class="pill">From Input to Decision</span>
+            <section id="lesson-7">
+                <h2>Lesson 7: Capstone - Full Execution Flow</h2>
+                <p class="ref">Code references: Models/*.cs and Logic/*.cs only</p>
+                <span class="pill">From Input to Decision</span>
 
-        <h3>What problem this capstone solves</h3>
-        <p>
-          It connects all classes into one coherent pipeline: input values become a model, algorithms run on that model,
-          and the final acceptance decision is returned with trace information.
-        </p>
+                <h3>What problem this capstone solves</h3>
+                <p>
+                    It connects all classes into one coherent pipeline: input values become a model, algorithms run on that model,
+                    and the final acceptance decision is returned with trace information.
+                </p>
 
-        <h3>How it fits in the bigger picture</h3>
-        <p>
-          The capstone is the architecture-level view of the project core. It demonstrates separation of concerns:
-          Models capture structure, Logic captures computation.
-        </p>
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    The capstone is the architecture-level view of the project core. It demonstrates separation of concerns:
+                    Models capture structure, Logic captures computation.
+                </p>
 
-        <h3>End-to-end flow: user input to result</h3>
-        <ol>
-          <li>User input arrives as names, flags, alphabet symbols, transition definitions, and a test word.</li>
-          <li>Model construction creates State objects and inserts them into an Automaton with symbols and transitions.</li>
-          <li>Optional logic phase runs NFAtoDFA to normalize nondeterministic machines.</li>
-          <li>Recognition phase runs RecognizeWord over the selected automaton.</li>
-          <li>Result packaging returns Accepted, RejectionReason, and StepLog in RecognitionResult.</li>
-        </ol>
+                <h3>End-to-end flow: user input to result</h3>
+                <ol>
+                    <li>User input arrives as names, flags, alphabet symbols, transition definitions, and a test word.</li>
+                    <li>Model construction creates State objects and inserts them into an Automaton with symbols and transitions.</li>
+                    <li>Optional logic phase runs NFAtoDFA to normalize nondeterministic machines.</li>
+                    <li>Recognition phase runs RecognizeWord over the selected automaton.</li>
+                    <li>Result packaging returns Accepted, RejectionReason, and StepLog in RecognitionResult.</li>
+                </ol>
 
-        <h3>Key methods involved and why they exist</h3>
-        <div class="summary-grid">
-          <div>
-            <h4>Model Build</h4>
-            <p>State constructors, AddState, AddSymbol, AddTransition define Q, Sigma, and delta.</p>
-          </div>
-          <div>
-            <h4>Normalization</h4>
-            <p>AutomatonDeterminizer.NFAtoDFA creates deterministic equivalents for robust recognition.</p>
-          </div>
-          <div>
-            <h4>Execution</h4>
-            <p>AutomatonRecognizer.RecognizeWord performs symbol consumption and transition traversal.</p>
-          </div>
-          <div>
-            <h4>Output</h4>
-            <p>RecognitionResult carries final decision and explanatory trace for callers.</p>
-          </div>
-        </div>
+                <h3>Key methods involved and why they exist</h3>
+                <div class="summary-grid">
+                    <div>
+                        <h4>Model Build</h4>
+                        <p>State constructors, AddState, AddSymbol, AddTransition define Q, Sigma, and delta.</p>
+                    </div>
+                    <div>
+                        <h4>Normalization</h4>
+                        <p>AutomatonDeterminizer.NFAtoDFA creates deterministic equivalents for robust recognition.</p>
+                    </div>
+                    <div>
+                        <h4>Execution</h4>
+                        <p>AutomatonRecognizer.RecognizeWord performs symbol consumption and transition traversal.</p>
+                    </div>
+                    <div>
+                        <h4>Output</h4>
+                        <p>RecognitionResult carries final decision and explanatory trace for callers.</p>
+                    </div>
+                </div>
 
-        <h3>CS concept behind it</h3>
-        <p>
-          This is an implementation of language recognition pipeline. You can view it as a pure data model plus pure processing layer,
-          a common architecture in compilers, parsers, and formal-language tools.
-        </p>
+                <h3>CS concept behind it</h3>
+                <p>
+                    This is an implementation of language recognition pipeline. You can view it as a pure data model plus pure processing layer,
+                    a common architecture in compilers, parsers, and formal-language tools.
+                </p>
 
-        <pre><code>// Flow sketch built only from available Models + Logic APIs
+                <pre><code>// Flow sketch built only from available Models + Logic APIs
 var automaton = new Automaton();
 automaton.AddState(new State("q0", true, false));
 automaton.AddState(new State("q1", false, true));
@@ -604,47 +605,252 @@ var recognizer = new AutomatonRecognizer(prepared);
 RecognitionResult result = recognizer.RecognizeWord("aa");
 
 // result.Accepted, result.RejectionReason, result.StepLog</code></pre>
-      </section>
-    </main>
-  </div>
+            </section>
 
-  <script>
-    (function () {
-      const links = Array.from(document.querySelectorAll('.sidebar a'));
-      const sections = links
-        .map(link => document.querySelector(link.getAttribute('href')))
-        .filter(Boolean);
+            <section id="lesson-8">
+                <h2>Lesson 8: AutomatonController Class (Logic/AutomatonController.cs)</h2>
+                <p class="ref">Code reference: Logic/AutomatonController.cs</p>
+                <span class="pill">Facade &amp; UI Bridge</span>
 
-      const setActive = (id) => {
-        for (const link of links) {
-          const isMatch = link.getAttribute('href') === '#' + id;
-          link.classList.toggle('active', isMatch);
-        }
-      };
+                <h3>What problem this class solves</h3>
+                <p>
+                    The UI layer should never manipulate an Automaton, a Transition, or a RecognitionResult directly.
+                    AutomatonController sits between the UI and the Models/Logic layers and exposes only safe, validated
+                    operations. Every public method returns a simple value type so the UI has no reason to import automaton
+                    internals.
+                </p>
 
-      if (sections.length > 0) {
-        setActive(sections[0].id);
-      }
+                <h3>How it fits in the bigger picture</h3>
+                <p>
+                    This class is the single entry point the UI calls for every user action: adding a symbol, adding a state,
+                    adding a transition, converting to DFA, recognizing a word, building the visual graph, and resetting the
+                    session. It owns the one live Automaton instance and replaces it when determinization runs.
+                </p>
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              setActive(entry.target.id);
-            }
-          }
-        },
+                <h3>Key properties and methods and why they exist</h3>
+                <ul>
+                    <li>
+                        <strong>Private Automaton field:</strong> the controller is the sole owner of the automaton instance.
+                        No other class can corrupt it because no reference escapes the controller.
+                    </li>
+                    <li>
+                        <strong>AddSymbol(char):</strong> validates that the symbol is not already in the alphabet before
+                        delegating to Automaton.AddSymbol. Returns a tuple so the UI knows whether to show an error.
+                    </li>
+                    <li>
+                        <strong>AddState(string, bool, bool):</strong> checks for duplicate names and enforces the single-initial-state
+                        rule before creating a State object and calling Automaton.AddState.
+                    </li>
+                    <li>
+                        <strong>AddTransition(string, char, string):</strong> resolves state names to State objects internally
+                        so the UI passes plain strings and never touches State references.
+                    </li>
+                    <li>
+                        <strong>GetSymbolNames / GetStateNames / GetStates:</strong> read-only projections that let the UI
+                        populate combo boxes and grids without holding model references.
+                    </li>
+                    <li>
+                        <strong>GetTargetStateNames(string, char):</strong> returns a list of strings for a given from-state
+                        and symbol, which is exactly what the transition matrix display needs.
+                    </li>
+                    <li>
+                        <strong>IsDeterministic():</strong> forwards the check so the UI can guard the convert button without
+                        knowing how determinism is tested.
+                    </li>
+                    <li>
+                        <strong>ConvertToDFA():</strong> calls AutomatonDeterminizer and replaces the internal automaton field
+                        with the result. The UI is not involved in this swap.
+                    </li>
+                    <li>
+                        <strong>RecognizeWord(string):</strong> handles the empty-string edge case directly, then delegates to
+                        AutomatonRecognizer. Returns a plain tuple so the UI only needs to check a bool and display a string.
+                    </li>
+                    <li>
+                        <strong>Reset():</strong> replaces the internal automaton with a fresh instance, which is the only
+                        safe way to clear all state without leaving dangling references.
+                    </li>
+                    <li>
+                        <strong>BuildGraph():</strong> constructs and styles an MSAGL Graph object from the current automaton.
+                        All graph color constants live here so they never appear in UI code.
+                    </li>
+                </ul>
+
+                <h3>Design pattern behind it</h3>
+                <p>
+                    This class is a <strong>Facade</strong>. A Facade wraps a complex subsystem (here: Automaton, Transition,
+                    AutomatonDeterminizer, AutomatonRecognizer, and MSAGL) behind a simpler interface. The UI only sees one
+                    class with plain method signatures. If any subsystem changes internally, only the controller needs to
+                    change, not the UI.
+                </p>
+                <p>
+                    It also acts as a <strong>Service Layer</strong> in the sense that all validation and orchestration
+                    logic sits here, keeping both the model classes and the UI form clean.
+                </p>
+
+                <h3>Return tuple pattern</h3>
+                <p>
+                    Every mutating method returns <code>(bool Success, string Error)</code> instead of throwing exceptions.
+                    This keeps error handling in the UI as a simple if-check rather than a try-catch block, which is
+                    appropriate for user-input validation that is expected to fail regularly.
+                </p>
+
+                <pre><code>// AddSymbol: validate first, delegate second, report result
+public (bool Success, string Error) AddSymbol(char symbol)
+{
+    if (automaton.GetSymbolNames().Contains(symbol.ToString()))
+        return (false, $"'{symbol}' is already in the alphabet!");
+
+    automaton.AddSymbol(symbol);
+    return (true, string.Empty);
+}</code></pre>
+
+                <pre><code>// AddState: two independent guard clauses before any mutation
+public (bool Success, string Error) AddState(string name, bool isInitial, bool isFinal)
+{
+    if (automaton.GetStateNames().Contains(name))
+        return (false, $"\"{name}\" is already in the Automaton");
+
+    if (isInitial &amp;&amp; automaton.InitExist())
+        return (false, "There already exists an Initial State");
+
+    automaton.AddState(new State(name, isInitial, isFinal));
+    return (true, string.Empty);
+}</code></pre>
+
+                <pre><code>// RecognizeWord: empty-string edge case handled before delegating
+public (bool Accepted, string Reason) RecognizeWord(string word)
+{
+    if (string.IsNullOrEmpty(word))
+    {
+        var start = automaton.GetStates().FirstOrDefault(s =&gt; s.IsInitial);
+        if (start != null &amp;&amp; start.IsEnd)
+            return (true, "Empty Word is Accepted");
+        else
+            return (false, "Empty Word is Rejected");
+    }
+
+    var recognizer = new AutomatonRecognizer(automaton);
+    var result = recognizer.RecognizeWord(word);
+
+    return result.Accepted
+        ? (true, "Word is Accepted")
+        : (false, result.RejectionReason);
+}</code></pre>
+
+                <pre><code>// BuildGraph: all MSAGL construction isolated from the UI
+public Graph BuildGraph()
+{
+    Graph graph = new Graph("Automaton Graph");
+
+    var layoutSettings = new SugiyamaLayoutSettings();
+    layoutSettings.EdgeRoutingSettings.EdgeRoutingMode =
+        Microsoft.Msagl.Core.Routing.EdgeRoutingMode.Spline;
+    graph.LayoutAlgorithmSettings = layoutSettings;
+
+    foreach (var state in automaton.GetStates())
+    {
+        var node = graph.AddNode(state.Name);
+        node.Attr.FillColor = GraphNodeFill;
+        node.Attr.Color     = GraphNodeBorder;
+        node.Label.FontColor = GraphNodeText;
+        node.Attr.Shape     = Shape.Circle;
+
+        if (state.IsEnd)
         {
-          root: null,
-          rootMargin: '-35% 0px -55% 0px',
-          threshold: 0
+            node.Attr.Shape = Shape.DoubleCircle;
+            node.Attr.Color = GraphFinalState;
         }
-      );
 
-      for (const section of sections) {
-        observer.observe(section);
-      }
-    })();
-  </script>
+        if (state.IsInitial)
+            node.Attr.FillColor = GraphInitialState;
+    }
+
+    foreach (var fromState in automaton.GetStates())
+        foreach (var symbolStr in automaton.GetSymbolNames())
+        {
+            char symbol = symbolStr[0];
+            var targets = automaton.GetTransition(fromState, symbol);
+            if (targets == null) continue;
+
+            foreach (var toState in targets)
+            {
+                var edge = graph.AddEdge(fromState.Name, symbolStr, toState.Name);
+                edge.Attr.Color      = GraphEdgeLine;
+                edge.Label.FontColor = GraphEdgeText;
+            }
+        }
+
+    return graph;
+}</code></pre>
+
+                <h3>How the UI consumes the controller</h3>
+                <div class="summary-grid">
+                    <div>
+                        <h4>User adds a symbol</h4>
+                        <p>UI calls AddSymbol(c). On false result it sets an error label. On true it adds a column to the grid and an item to the combo box.</p>
+                    </div>
+                    <div>
+                        <h4>User adds a state</h4>
+                        <p>UI calls AddState(name, isInit, isFinal). On true it adds a row header to the grid and entries to the From and To combo boxes.</p>
+                    </div>
+                    <div>
+                        <h4>User adds a transition</h4>
+                        <p>UI calls AddTransition(from, symbol, to). On true it finds the matching grid cell and writes the target state name into it.</p>
+                    </div>
+                    <div>
+                        <h4>User converts to DFA</h4>
+                        <p>UI calls IsDeterministic first. If false it calls ConvertToDFA then RefreshMatrix and RefreshGraph to rebuild both visual components from the new automaton state.</p>
+                    </div>
+                    <div>
+                        <h4>User tests a word</h4>
+                        <p>UI calls RecognizeWord on every text change. It sets the label text and color based on the returned bool and reason string.</p>
+                    </div>
+                    <div>
+                        <h4>User resets</h4>
+                        <p>UI calls Reset then clears all input controls. The controller discards the old automaton and the UI rebuilds from scratch.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            const links = Array.from(document.querySelectorAll('.sidebar a'));
+            const sections = links
+                .map(link => document.querySelector(link.getAttribute('href')))
+                .filter(Boolean);
+
+            const setActive = (id) => {
+                for (const link of links) {
+                    const isMatch = link.getAttribute('href') === '#' + id;
+                    link.classList.toggle('active', isMatch);
+                }
+            };
+
+            if (sections.length > 0) {
+                setActive(sections[0].id);
+            }
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting) {
+                            setActive(entry.target.id);
+                        }
+                    }
+                },
+                {
+                    root: null,
+                    rootMargin: '-35% 0px -55% 0px',
+                    threshold: 0
+                }
+            );
+
+            for (const section of sections) {
+                observer.observe(section);
+            }
+        })();
+    </script>
 </body>
 </html>
