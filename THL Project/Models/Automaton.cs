@@ -11,6 +11,7 @@ public class Automaton
 
     private List<State> states;
 
+
     private void RebuiltMatrix()
     {
         int stateCount = StateIndexMap.Count;
