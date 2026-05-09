@@ -115,6 +115,7 @@ namespace THL_Project.UI
             ToComboBox.SetBounds(startX + (comboWidth * 2) + (gap * 2), y, comboWidth, ToComboBox.Height);
         }
 
+        //Text box Coloring
         private void StyleControls(Control parent)
         {
             foreach (Control c in parent.Controls)
